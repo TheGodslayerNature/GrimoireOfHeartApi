@@ -1,6 +1,6 @@
 package com.fate.GrimoireOfHeartApi.repositories;
 
-import com.fate.GrimoireOfHeartApi.model.Personagem.Personagem;
+import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

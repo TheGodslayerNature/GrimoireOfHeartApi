@@ -1,6 +1,6 @@
 package com.fate.GrimoireOfHeartApi.services;
 
-import com.fate.GrimoireOfHeartApi.model.Personagem.Personagem;
+import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import com.fate.GrimoireOfHeartApi.repositories.PersonagemRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -27,8 +27,9 @@ public class PersonagemService {
         return personagemRepository.findAll();
     }
     public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas){
-//        Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
-        personagemRepository.save(novasCaracteristicas);
+        Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
+        actualPersonagem.ifPresent(personagem -> personagem.setNomeJogador(novasCaracteristicas.getNomeJogador()));
+        actualPersonagem.ifPresent(personagem -> personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem()));
     }
     public void deletarPersonagem(int idPersonagem){
         personagemRepository.findById(idPersonagem).ifPresent(personagemRepository::delete);

@@ -1,6 +1,7 @@
 package com.fate.GrimoireOfHeartApi.services;
 
-import com.fate.GrimoireOfHeartApi.model.Personagem.Personagem;
+import com.fate.GrimoireOfHeartApi.model.atributo.Atributos;
+import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import com.fate.GrimoireOfHeartApi.repositories.PersonagemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,31 +25,31 @@ public class PersonagemServiceTest {
     private PersonagemService personagemService;
     @Test
     void deveSalvarPersonagem() {
-        Personagem personagem = new Personagem("João", "Madelin",1);
+        Personagem personagem = new Personagem("João", "Madelin",new Atributos());
 
         personagemService.salvarPersonagem(personagem);
 
-        verify(personagemRepository).saveAndFlush(new Personagem("João", "Madelin",1));
+        verify(personagemRepository).save(new Personagem("João", "Madelin",new Atributos()));
 
         when(personagemRepository.findById(1)).thenReturn(Optional.of(personagem));
 
         Optional<Personagem> esperado = personagemService.getPersonagemPorId(1);
 
-        assertThat(new Personagem("João", "Madelin",1)).isEqualTo(esperado.orElseThrow());
+        assertThat(new Personagem("João", "Madelin",new Atributos())).isEqualTo(esperado.orElseThrow());
     }
 
     @Test
     void deveRetornarTodosOsPersonagens() {
-        Personagem personagem = new Personagem("João", "Madelin",1);
-        Personagem personagem2 = new Personagem("Maria", "Jaime",2);
+        Personagem personagem = new Personagem("João", "Madelin",new Atributos());
+        Personagem personagem2 = new Personagem("Maria", "Jaime",new Atributos());
 
         personagemService.salvarPersonagem(personagem);
 
-        verify(personagemRepository).saveAndFlush(new Personagem("João", "Madelin",1));
+        verify(personagemRepository).save(new Personagem("João", "Madelin",new Atributos()));
 
         personagemService.salvarPersonagem(personagem2);
 
-        verify(personagemRepository).saveAndFlush(new Personagem("Maria", "Jaime",2));
+        verify(personagemRepository).save(new Personagem("Maria", "Jaime",new Atributos()));
 
         List<Personagem> personagens = Arrays.asList(personagem,personagem2);
         when(personagemRepository.findAll()).thenReturn(personagens);

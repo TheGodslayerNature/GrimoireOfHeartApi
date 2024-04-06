@@ -1,6 +1,6 @@
 package com.fate.GrimoireOfHeartApi.controllers;
 
-import com.fate.GrimoireOfHeartApi.model.Personagem.Personagem;
+import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import com.fate.GrimoireOfHeartApi.services.PersonagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
