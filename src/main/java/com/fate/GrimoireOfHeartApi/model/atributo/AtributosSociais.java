@@ -18,12 +18,12 @@ public class AtributosSociais implements Serializable {
     private Atributo coragem = new Atributo("CORAGEM", 0);
     private final LinkedHashMap<String,Integer> meusAtributos = new LinkedHashMap<>();
     public AtributosSociais() {
-        this.meusAtributos.put(conhecimento.getNome(), conhecimento.getPonto());
-        this.meusAtributos.put(disciplina.getNome(), disciplina.getPonto());
-        this.meusAtributos.put(empatia.getNome(), empatia.getPonto());
-        this.meusAtributos.put(charme.getNome(), charme.getPonto());
-        this.meusAtributos.put(expressao.getNome(), expressao.getPonto());
-        this.meusAtributos.put(coragem.getNome(), coragem.getPonto());
+        this.meusAtributos.put(conhecimento.nome(), conhecimento.ponto());
+        this.meusAtributos.put(disciplina.nome(), disciplina.ponto());
+        this.meusAtributos.put(empatia.nome(), empatia.ponto());
+        this.meusAtributos.put(charme.nome(), charme.ponto());
+        this.meusAtributos.put(expressao.nome(), expressao.ponto());
+        this.meusAtributos.put(coragem.nome(), coragem.ponto());
     }
 
     public List<String> nomeDosAtributosSociais(){

@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -21,12 +20,12 @@ public class AtributosDeBatalha implements Serializable {
     private final Atributo sor = new Atributo("SOR", 0);
     private final LinkedHashMap<String, Integer> meusAtributos = new LinkedHashMap<>();
     public AtributosDeBatalha() {
-        meusAtributos.put(forca.getNome(), forca.getPonto());
-        meusAtributos.put(tec.getNome(), tec.getPonto());
-        meusAtributos.put(vit.getNome(), vit.getPonto());
-        meusAtributos.put(mag.getNome(), mag.getPonto());
-        meusAtributos.put(agi.getNome(), agi.getPonto());
-        meusAtributos.put(sor.getNome(), sor.getPonto());
+        meusAtributos.put(forca.nome(), forca.ponto());
+        meusAtributos.put(tec.nome(), tec.ponto());
+        meusAtributos.put(vit.nome(), vit.ponto());
+        meusAtributos.put(mag.nome(), mag.ponto());
+        meusAtributos.put(agi.nome(), agi.ponto());
+        meusAtributos.put(sor.nome(), sor.ponto());
     }
 
     public List<String> nomeDosAtributosDeBatalha() {
