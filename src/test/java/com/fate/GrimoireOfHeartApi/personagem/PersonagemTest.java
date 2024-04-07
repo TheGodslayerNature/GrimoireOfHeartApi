@@ -1,6 +1,7 @@
 package com.fate.GrimoireOfHeartApi.personagem;
 
-import com.fate.GrimoireOfHeartApi.model.atributo.Atributos;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.Test;
 
@@ -12,28 +13,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PersonagemTest {
     @Test
     void deveConseguirAcessarAtributosDeBatalha() {
-        Atributos atributos = new Atributos();
-        Personagem manuel = new Personagem("James", "Manuel", atributos);
+        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
+        Personagem manuel = new Personagem("James", "Manuel", atributosDeBatalha);
 
         List<String> atributosEsperados = Arrays.asList("FOR: 0", "TEC: 0", "VIT: 0", "MAG: 0", "AGI: 0", "SOR: 0");
-        assertThat(manuel.getAtributosDeBatalha().nomesDosAtributos()).isEqualTo(atributosEsperados);
+        assertThat(manuel.getAtributosDeBatalha().nomeDosAtributosDeBatalha()).isEqualTo(atributosEsperados);
     }
 
     @Test
     void deveSerPosssivelModificarOsValoresDosAtributos() {
-        Atributos atributos = new Atributos();
-        Personagem manuel = new Personagem("James", "Manuel", atributos);
+        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
+        Personagem manuel = new Personagem("James", "Manuel", atributosDeBatalha);
 
         List<String> atributosEsperados = Arrays.asList("FOR: 0", "TEC: 0", "VIT: 0", "MAG: 0", "AGI: 0", "SOR: 0");
-        assertThat(manuel.getAtributosDeBatalha().nomesDosAtributos()).isEqualTo(atributosEsperados);
+        assertThat(manuel.getAtributosDeBatalha().nomeDosAtributosDeBatalha()).isEqualTo(atributosEsperados);
 
-        manuel.adicionarPontos("FOR", 2);
+        manuel.adicionarPontoAAtributoDeBatalha("FOR", 2);
 
         atributosEsperados = Arrays.asList("FOR: 2", "TEC: 0", "VIT: 0", "MAG: 0", "AGI: 0", "SOR: 0");
-        assertThat(manuel.getAtributosDeBatalha().nomesDosAtributos()).isEqualTo(atributosEsperados);
+        assertThat(manuel.getAtributosDeBatalha().nomeDosAtributosDeBatalha()).isEqualTo(atributosEsperados);
 
-        manuel.adicionarPontos("AGI", 3);
+        manuel.adicionarPontoAAtributoDeBatalha("AGI", 3);
         atributosEsperados = Arrays.asList("FOR: 2", "TEC: 0", "VIT: 0", "MAG: 0", "AGI: 3", "SOR: 0");
-        assertThat(manuel.getAtributosDeBatalha().nomesDosAtributos()).isEqualTo(atributosEsperados);
+        assertThat(manuel.getAtributosDeBatalha().nomeDosAtributosDeBatalha()).isEqualTo(atributosEsperados);
+    }
+
+    @Test
+    void oPersonagemDeveConseguirAcessarEModificarAtributosSociais() {
+        AtributosSociais atributosSociais = new AtributosSociais();
+        Personagem jaden = new Personagem("Paulo", "Jaden", new AtributosDeBatalha(), atributosSociais);
+
+        List<String> atributosEsperados =  Arrays.asList("CHARME: 0", "CORAGEM: 0", "DISCIPLINA: 0", "EMPATIA: 0", "CONHECIMENTO: 0", "EXPRESSAO: 0");
+
+        assertThat(jaden.getAtributosSociais().nomeDosAtributosSociais()).containsAnyElementsOf(atributosEsperados);
+
+        jaden.adicionarPontoAAtributoSocial("EMPATIA", 2);
+
+        atributosEsperados =  Arrays.asList("CHARME: 0", "CORAGEM: 0", "DISCIPLINA: 0", "EMPATIA: 2", "CONHECIMENTO: 0", "EXPRESSAO: 0");
+        assertThat(jaden.getAtributosSociais().nomeDosAtributosSociais()).containsAll(atributosEsperados);
     }
 }

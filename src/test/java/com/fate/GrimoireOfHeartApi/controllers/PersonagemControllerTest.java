@@ -2,7 +2,7 @@ package com.fate.GrimoireOfHeartApi.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fate.GrimoireOfHeartApi.model.atributo.Atributos;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ public class PersonagemControllerTest {
     private Personagem personagemManuel;
     private Personagem personagemManuela;
     private Personagem personagemJames;
-    private Atributos atributos;
+    private AtributosDeBatalha atributosDeBatalha;
     private String transformarParaJson(Personagem personagem) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(personagem);
@@ -39,7 +39,7 @@ public class PersonagemControllerTest {
 
     @BeforeEach
     void setUp() {
-        atributos = new Atributos();
+        atributosDeBatalha = new AtributosDeBatalha();
         personagemManuel = new Personagem("Manuel", "Alessandro", null);
         personagemManuela = new Personagem("Manuela", "Alessandra", null);
         personagemJames = new Personagem("James", "Navas", null);

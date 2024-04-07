@@ -5,13 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Atributo {
-    private String name;
-    private int ponto;
-
-    public Atributo(String name, int ponto) {
-        this.name = name;
-        this.ponto = ponto;
-    }
-
+public record Atributo(String nome, int ponto){
 }
