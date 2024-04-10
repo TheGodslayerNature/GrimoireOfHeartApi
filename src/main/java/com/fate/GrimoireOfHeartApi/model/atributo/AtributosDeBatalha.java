@@ -12,12 +12,12 @@ import java.util.List;
 public class AtributosDeBatalha implements Serializable {
     @Id
     private int id;
-    private final Atributo forca = new Atributo("FOR", 0);
-    private final Atributo tec = new Atributo("TEC", 0);
-    private final Atributo vit = new Atributo("VIT", 0);
-    private final Atributo mag = new Atributo("MAG", 0);
-    private final Atributo agi = new Atributo("AGI", 0);
-    private final Atributo sor = new Atributo("SOR", 0);
+    private final Atributo forca = new Atributo("FOR", 0, 1);
+    private final Atributo vit = new Atributo("VIT", 0, 2);
+    private final Atributo mag = new Atributo("MAG", 0, 3);
+    private final Atributo tec = new Atributo("TEC", 0, 4);
+    private final Atributo agi = new Atributo("AGI", 0, 5);
+    private final Atributo sor = new Atributo("SOR", 0, 6);
     private final LinkedHashMap<String, Integer> meusAtributos = new LinkedHashMap<>();
     public AtributosDeBatalha() {
         meusAtributos.put(forca.nome(), forca.ponto());

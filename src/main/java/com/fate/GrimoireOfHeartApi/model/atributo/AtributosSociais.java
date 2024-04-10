@@ -10,12 +10,12 @@ import java.util.*;
 public class AtributosSociais implements Serializable {
     @Id
     private int id;
-    private Atributo conhecimento = new Atributo("CONHECIMENTO", 0);
-    private Atributo disciplina = new Atributo("DISCIPLINA", 0);
-    private Atributo empatia = new Atributo("EMPATIA", 0);
-    private Atributo charme = new Atributo("CHARME", 0);
-    private Atributo expressao = new Atributo("EXPRESSAO", 0);
-    private Atributo coragem = new Atributo("CORAGEM", 0);
+    private Atributo conhecimento = new Atributo("CONHECIMENTO", 0, 1);
+    private Atributo disciplina = new Atributo("DISCIPLINA", 0, 2);
+    private Atributo empatia = new Atributo("EMPATIA", 0, 3);
+    private Atributo charme = new Atributo("CHARME", 0, 4);
+    private Atributo expressao = new Atributo("EXPRESSAO", 0, 5);
+    private Atributo coragem = new Atributo("CORAGEM", 0, 6);
     private final LinkedHashMap<String,Integer> meusAtributos = new LinkedHashMap<>();
     public AtributosSociais() {
         this.meusAtributos.put(conhecimento.nome(), conhecimento.ponto());

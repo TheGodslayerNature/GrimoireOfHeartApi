@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/personagem")
+@ResponseBody
+//@RequestMapping("/personagem")
 public class PersonagemController {
     @Autowired
     private PersonagemService personagemService;

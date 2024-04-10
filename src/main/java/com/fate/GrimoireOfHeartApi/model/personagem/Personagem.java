@@ -28,11 +28,17 @@ public class Personagem implements Serializable {
         this.atributosDeBatalha = atributosDeBatalha;
     }
 
-    public Personagem(String nomeJogador, String nomePersonagem, AtributosDeBatalha atributosDeBatalha, AtributosSociais atributosSociais) {
+    public Personagem(String nomeJogador, String nomePersonagem) {
         this.nomeJogador = nomeJogador;
         this.nomePersonagem = nomePersonagem;
         this.atributosDeBatalha = atributosDeBatalha;
-        this.atributosSociais = atributosSociais;
+    }
+
+    public Personagem(String nomeJogador, String nomePersonagem, AtributosDeBatalha atributosDeBatalha, AtributosSociais atributosSociais) {
+        this.nomeJogador = nomeJogador;
+        this.nomePersonagem = nomePersonagem;
+//        this.atributosDeBatalha = atributosDeBatalha;
+//        this.atributosSociais = atributosSociais;
     }
 
     public void adicionarPontoAAtributoDeBatalha(String nomeDoAtributo, int valor){
