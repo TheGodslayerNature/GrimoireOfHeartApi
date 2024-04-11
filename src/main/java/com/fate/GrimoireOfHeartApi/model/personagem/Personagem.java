@@ -16,9 +16,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class Personagem implements Serializable {
+    @Column
     private String nomeJogador;
+    @Column
     private String nomePersonagem;
+    @Column
     private AtributosDeBatalha atributosDeBatalha;
+    @Column
     private AtributosSociais atributosSociais;
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -37,8 +41,8 @@ public class Personagem implements Serializable {
     public Personagem(String nomeJogador, String nomePersonagem, AtributosDeBatalha atributosDeBatalha, AtributosSociais atributosSociais) {
         this.nomeJogador = nomeJogador;
         this.nomePersonagem = nomePersonagem;
-//        this.atributosDeBatalha = atributosDeBatalha;
-//        this.atributosSociais = atributosSociais;
+        this.atributosDeBatalha = atributosDeBatalha;
+        this.atributosSociais = atributosSociais;
     }
 
     public void adicionarPontoAAtributoDeBatalha(String nomeDoAtributo, int valor){

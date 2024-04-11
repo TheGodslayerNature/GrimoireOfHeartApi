@@ -1,6 +1,8 @@
 package com.fate.GrimoireOfHeartApi.model.atributo;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.util.List;
 
 @Entity
 public class AtributosDeBatalha implements Serializable {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private final Atributo forca = new Atributo("FOR", 0, 1);
     private final Atributo vit = new Atributo("VIT", 0, 2);
