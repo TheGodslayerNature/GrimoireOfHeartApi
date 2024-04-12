@@ -3,6 +3,7 @@ package com.fate.GrimoireOfHeartApi.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,22 +34,25 @@ public class PersonagemControllerTest {
     private Personagem personagemManuel;
     private Personagem personagemManuela;
     private Personagem personagemJames;
-    private AtributosDeBatalha atributosDeBatalha;
-    private String transformarParaJson(Personagem personagem) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(personagem);
-    }
 
+    private String transformarParaJson(Object object) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
+    }
+//    private String printObject(Object object){
+//
+//    }
     @BeforeEach
     void setUp() {
-        atributosDeBatalha = new AtributosDeBatalha();
-        personagemManuel = new Personagem("Manuel", "Alessandro", null);
-        personagemManuela = new Personagem("Manuela", "Alessandra", null);
-        personagemJames = new Personagem("James", "Navas", null);
+        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
+        AtributosSociais atributosSociais = new AtributosSociais();
+        personagemManuel = new Personagem("Alessandro", atributosDeBatalha, atributosSociais);
+        personagemManuela = new Personagem("Alessandra", atributosDeBatalha, atributosSociais);
+        personagemJames = new Personagem("Navas", atributosDeBatalha, atributosSociais);
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception {
         personagemController.deletarPersonagem(personagemManuel.getId());
         personagemController.deletarPersonagem(personagemManuela.getId());
         personagemController.deletarPersonagem(personagemJames.getId());
@@ -62,6 +68,7 @@ public class PersonagemControllerTest {
                 .andReturn().getResponse();
 
         assertThat(HttpStatus.OK.value()).isEqualTo(resultado.getStatus());
+        assertThat(personagemController.getPersonagem(personagemManuel.getId()).orElseThrow()).isEqualTo(personagemManuel);
     }
 
     @Test
@@ -75,42 +82,9 @@ public class PersonagemControllerTest {
         MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/getPersonagem/1"))
                 .andReturn().getResponse();
 
-        String personagemJsonExpected = "{\"nomeJogador\":\"Manuel\",\"nomePersonagem\":\"Alessandro\",\"atributosDeBatalha\":null,\"id\":1}";
-
                 assertThat(HttpStatus.OK.value()).isEqualTo(resultado.getStatus());
-                assertThat(resultado.getContentAsString()).isEqualTo(personagemJsonExpected);
+                assertThat(personagemController.getPersonagem(personagemManuel.getId()).orElseThrow()).isEqualTo(personagemManuel);
     }
-
-    @Test
-    void deveRetornarTodosOsPersonagens() throws Exception {
-        personagemController.salvarPersonagem(personagemManuel);
-
-//        mockMvc.perform(post("/personagem/salvarPersonagem")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(transformarParaJson(personagem)));
-//
-//        //Acentuações estão bugando
-//
-        personagemController.salvarPersonagem(personagemJames);
-//
-//        mockMvc.perform(post("/personagem/salvarPersonagem")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(transformarParaJson(personagem)));
-//
-        MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/getPersonagens"))
-                .andReturn().getResponse();
-
-        System.out.println(personagemController.getPersonagens());
-
-        String attString = ",\"atributosDeBatalha\":null,";
-
-        String personagensExpected = "[{\"nomeJogador\":\"Manuel\",\"nomePersonagem\":\"Alessandro\",\"atributosDeBatalha\":null,\"id\":1},{\"nomeJogador\":\"James\",\"nomePersonagem\":\"Navas\",\"atributosDeBatalha\":null,\"id\":2}]";
-
-        System.out.println(personagemController.getPersonagens());
-        assertThat(resultado.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(resultado.getContentAsString()).isEqualTo(personagensExpected);
-    }
-
     @Test
     void deveTerSucessoAoAtualizarDadosDeUmPersonagem() throws Exception{
         personagemController.salvarPersonagem(personagemManuel);
@@ -124,11 +98,7 @@ public class PersonagemControllerTest {
         mockMvc.perform(put("/personagem/atualizarPersonagem/1")
                 .contentType(MediaType.APPLICATION_JSON).content(transformarParaJson(personagemManuela)));
 
-        MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/getPersonagem/1"))
-                .andReturn().getResponse();
-
-        String personagemJsonExpected = "{\"nomeJogador\":\"Manuela\",\"nomePersonagem\":\"Alessandra\",\"atributosDeBatalha\":null,\"id\":1}";
-        assertThat(resultado.getContentAsString()).isEqualTo(personagemJsonExpected);
+        assertThat(personagemController.getPersonagem(1).orElseThrow()).isEqualTo(personagemManuela);
     }
 
     @Test

@@ -18,20 +18,21 @@ public class PersonagemService {
     @Autowired
     private final PersonagemRepository personagemRepository;
     public void salvarPersonagem(Personagem personagem){
+        if (personagemRepository.findById(personagem.getId()).isPresent()) return;
         personagemRepository.save(personagem);
     }
-    public Optional<Personagem> getPersonagemPorId(int id){
+    public Optional<Personagem> getPersonagemPorId(int id) throws Exception {
       return personagemRepository.findById(id);
     }
     public List<Personagem> getPersonagens(){
         return personagemRepository.findAll();
     }
-    public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas){
+    public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas) throws Exception {
         Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
-        actualPersonagem.ifPresent(personagem -> personagem.setNomeJogador(novasCaracteristicas.getNomeJogador()));
         actualPersonagem.ifPresent(personagem -> personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem()));
     }
-    public void deletarPersonagem(int idPersonagem){
+    public void deletarPersonagem(int idPersonagem) throws Exception {
         personagemRepository.findById(idPersonagem).ifPresent(personagemRepository::delete);
     }
+
 }

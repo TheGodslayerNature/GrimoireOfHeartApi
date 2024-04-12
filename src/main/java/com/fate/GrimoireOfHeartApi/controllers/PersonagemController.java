@@ -15,7 +15,7 @@ public class PersonagemController {
     @Autowired
     private PersonagemService personagemService;
     @GetMapping("/getPersonagem/{id}")
-    public Optional<Personagem> getPersonagem(@PathVariable(value = "id") int idPersonagem){
+    public Optional<Personagem> getPersonagem(@PathVariable(value = "id") int idPersonagem) throws Exception {
         return personagemService.getPersonagemPorId(idPersonagem);
     }
     @PostMapping("/salvarPersonagem")
@@ -28,11 +28,11 @@ public class PersonagemController {
     }
 
     @PutMapping("/atualizarPersonagem/{id}")
-    public void atualizarPersonagem(@PathVariable(value = "id") int idPersonagem,@RequestBody Personagem novasCaracteristicas) {
+    public void atualizarPersonagem(@PathVariable(value = "id") int idPersonagem,@RequestBody Personagem novasCaracteristicas) throws Exception {
         personagemService.atualizarPersonagem(idPersonagem, novasCaracteristicas);
     }
     @DeleteMapping("/deletarPersonagem/{id}")
-    public void deletarPersonagem(@PathVariable(value = "id") int idPersonagem){
+    public void deletarPersonagem(@PathVariable(value = "id") int idPersonagem) throws Exception {
         personagemService.deletarPersonagem(idPersonagem);
     }
 }

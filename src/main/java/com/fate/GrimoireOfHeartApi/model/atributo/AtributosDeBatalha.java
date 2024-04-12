@@ -1,39 +1,28 @@
 package com.fate.GrimoireOfHeartApi.model.atributo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 
 @Entity
+@Data
+@Setter
+@Getter
 public class AtributosDeBatalha implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private final Atributo forca = new Atributo("FOR", 0, 1);
-    private final Atributo vit = new Atributo("VIT", 0, 2);
-    private final Atributo mag = new Atributo("MAG", 0, 3);
-    private final Atributo tec = new Atributo("TEC", 0, 4);
-    private final Atributo agi = new Atributo("AGI", 0, 5);
-    private final Atributo sor = new Atributo("SOR", 0, 6);
-    private final LinkedHashMap<String, Integer> meusAtributos = new LinkedHashMap<>();
-    public AtributosDeBatalha() {
-        meusAtributos.put(forca.nome(), forca.ponto());
-        meusAtributos.put(tec.nome(), tec.ponto());
-        meusAtributos.put(vit.nome(), vit.ponto());
-        meusAtributos.put(mag.nome(), mag.ponto());
-        meusAtributos.put(agi.nome(), agi.ponto());
-        meusAtributos.put(sor.nome(), sor.ponto());
+    private Long forca =  0L;
+    private Long vitalidade =  0L;
+    private Long magia =  0L;
+    private Long tecnica =  0L;
+    private Long agilidade =  0L;
+    private Long sorte =  0L;
+    public String printAtributosDeBatalha(){
+        return String.format("FOR: %o, TEC: %o, VIT: %o, MAG: %o, AGI: %o, SOR: %o", forca,tecnica,vitalidade,magia,agilidade,sorte);
     }
 
-    public List<String> nomeDosAtributosDeBatalha() {
-        return meusAtributos.entrySet().stream().map( att -> String.format("%s: %o", att.getKey(), att.getValue())).toList();
-    }
-    public void adicionarPontos(String nomeDoAtributo, int valor){
-        if (meusAtributos.containsKey(nomeDoAtributo)) meusAtributos.put(nomeDoAtributo, valor);
-    }
 }
