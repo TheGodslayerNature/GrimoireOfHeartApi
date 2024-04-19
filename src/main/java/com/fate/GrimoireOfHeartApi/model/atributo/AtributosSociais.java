@@ -20,14 +20,7 @@ public class AtributosSociais implements Serializable {
     private Long charme = 0L;
     private Long expressao = 0L;
     private Long coragem = 0L;
-    public AtributosSociais() {
-
+    public String printAtributosSociais() {
+        return String.format("CONHECIMEHTOS: %d, DISCIPLINA: %d, EMPATIA: %d, CHARME: %d, EXPRESSÃO: %d, CORAGEM: %d", conhecimento,disciplina,empatia,charme,expressao,coragem);
     }
-
-//    public List<String> nomeDosAtributosSociais(){
-//        return  meusAtributos.entrySet().stream().map( att -> String.format("%s: %o", att.getKey(), att.getValue())).toList();
-//    }
-//    public void adicionarPontos(String nomeDoAtributo, int ponto){
-//        if (meusAtributos.containsKey(nomeDoAtributo)) meusAtributos.put(nomeDoAtributo, ponto);
-//    }
 }

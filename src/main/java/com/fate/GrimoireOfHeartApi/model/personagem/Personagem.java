@@ -1,10 +1,10 @@
 package com.fate.GrimoireOfHeartApi.model.personagem;
 
+import com.fate.GrimoireOfHeartApi.exceptions.NaoExistemPontosSuficientes;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
 
 import java.io.Serializable;
 
@@ -30,9 +30,9 @@ public class Personagem implements Serializable {
     @Column
     private int nivel;
     @Column
-    private Long pontosDeBatalha;
+    private Long pontosDeBatalha = 0L;
     @Column
-    private Long pontosSociais;
+    private Long pontosSociais = 0L;
     public Personagem(String nomePersonagem, AtributosDeBatalha atributosDeBatalha) {
         this.nomePersonagem = nomePersonagem;
         this.atributosDeBatalha = atributosDeBatalha;
@@ -43,31 +43,55 @@ public class Personagem implements Serializable {
         this.atributosDeBatalha = atributosDeBatalha;
         this.atributosSociais = atributosSociais;
     }
-    public void addPontoAFor(Long valor){
-        if (pontosDeBatalha >= valor ) atributosDeBatalha.setForca(valor);
+    public void addPontoAFor(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setForca(valor);
+        pontosDeBatalha -= valor;
     }
-    public void addPontoATec(Long valor){
+    public void addPontoATec(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setTecnica(valor);
+        pontosDeBatalha -= valor;
     }
-    public void addPontoAVit(Long valor){
+    public void addPontoAVit(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setVitalidade(valor);
+        pontosDeBatalha -= valor;
     }
-    public void addPontoAAgi(Long valor){
-        if (pontosDeBatalha < 1) return;
+    public void addPontoAAgi(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setAgilidade(valor);
+        pontosDeBatalha -= valor;
     }
-    public void addPontoAMag(Long valor){
+    public void addPontoAMag(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setMagia(valor);
+        pontosDeBatalha -= valor;
     }
-    public void addPontoASor(Long valor){
+    public void addPontoASor(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setSorte(valor);
+        pontosDeBatalha -= valor;
     }
-//    public void adicionarPontoAAtributoSocial(String nomeDoAtributo, int valor){
-//        atributosSociais.adicionarPontos(nomeDoAtributo, valor);
-//    }
-
+    public void addPontoACharme(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setCharme(valor);
+        pontosSociais -= valor;
+    }
+    private void verificacaoSeExistemPontosDeBatalhaSuficientes(Long valor) throws NaoExistemPontosSuficientes {
+        if (pontosDeBatalha < valor)   {
+            throw new NaoExistemPontosSuficientes("Não existem pontos suficientes");
+        }
+    }
+    private void verificacaoSeExistemPontosSociaisSuficientes(Long valor) throws NaoExistemPontosSuficientes {
+        if (pontosSociais < valor)   {
+            throw new NaoExistemPontosSuficientes("Não existem pontos suficientes");
+        }
+    }
     public String printAtributosDeBatalha(){
         return atributosDeBatalha.printAtributosDeBatalha();
+    }
+    public String printAtributosSociais(){
+        return atributosSociais.printAtributosSociais();
     }
 }
