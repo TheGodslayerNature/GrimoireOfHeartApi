@@ -2,8 +2,6 @@ package com.fate.GrimoireOfHeartApi.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
-import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -39,16 +35,11 @@ public class PersonagemControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
     }
-//    private String printObject(Object object){
-//
-//    }
     @BeforeEach
     void setUp() {
-        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
-        AtributosSociais atributosSociais = new AtributosSociais();
-        personagemManuel = new Personagem("Alessandro", atributosDeBatalha, atributosSociais);
-        personagemManuela = new Personagem("Alessandra", atributosDeBatalha, atributosSociais);
-        personagemJames = new Personagem("Navas", atributosDeBatalha, atributosSociais);
+        personagemManuel = new Personagem("Alessandro");
+        personagemManuela = new Personagem("Manuela");
+        personagemJames = new Personagem("Navas");
     }
 
     @AfterEach
@@ -109,6 +100,7 @@ public class PersonagemControllerTest {
 
         mockMvc.perform(delete("/personagem/deletarPersonagem/1")
                 .contentType(MediaType.APPLICATION_JSON).contentType(transformarParaJson(personagemManuela)));
+
 
         MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/getPersonagem/1"))
                 .andReturn().getResponse();

@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonagemServiceTest {
@@ -25,31 +24,28 @@ public class PersonagemServiceTest {
     private PersonagemService personagemService;
     @Test
     void deveSalvarPersonagem() throws Exception {
-        Personagem personagem = new Personagem("Madelin",new AtributosDeBatalha());
+        Personagem personagem = new Personagem("Madelin");
 
         personagemService.salvarPersonagem(personagem);
 
-        verify(personagemRepository).save(new Personagem("Madelin",new AtributosDeBatalha()));
+        verify(personagemRepository).save(new Personagem("Madelin"));
 
         when(personagemRepository.findById(1)).thenReturn(Optional.of(personagem));
 
         Optional<Personagem> esperado = personagemService.getPersonagemPorId(1);
 
-        assertThat(new Personagem( "Madelin",new AtributosDeBatalha())).isEqualTo(esperado.orElseThrow());
+        assertThat(new Personagem( "Madelin")).isEqualTo(esperado.orElseThrow());
     }
 
     @Test
     void deveRetornarTodosOsPersonagens() {
-        Personagem personagem = new Personagem( "Madelin",new AtributosDeBatalha());
-        Personagem personagem2 = new Personagem( "Jaime",new AtributosDeBatalha());
+        Personagem personagem = new Personagem( "Madelin");
+        Personagem personagem2 = new Personagem( "Jaime");
 
         personagemService.salvarPersonagem(personagem);
-
-        verify(personagemRepository).save(new Personagem("Madelin",new AtributosDeBatalha()));
-
         personagemService.salvarPersonagem(personagem2);
 
-        verify(personagemRepository).save(new Personagem("Jaime",new AtributosDeBatalha()));
+        verify(personagemRepository, times(2)).save(any());
 
         List<Personagem> personagens = Arrays.asList(personagem,personagem2);
         when(personagemRepository.findAll()).thenReturn(personagens);

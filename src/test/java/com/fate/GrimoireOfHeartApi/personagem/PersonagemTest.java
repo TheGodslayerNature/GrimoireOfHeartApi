@@ -12,8 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PersonagemTest {
     @Test
     void deveConseguirAcessarAtributosDeBatalha(){
-        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
-        Personagem manuel = new Personagem("Manuel", atributosDeBatalha);
+        Personagem manuel = new Personagem("Manuel");
 
         String esperado = "FOR: 0, TEC: 0, VIT: 0, MAG: 0, AGI: 0, SOR: 0";
         assertThat(manuel.printAtributosDeBatalha()).isEqualTo(esperado);
@@ -21,8 +20,7 @@ public class PersonagemTest {
 
     @Test
     void personagemDeveConseguirAdicionarPontosADeterminadoAtributoSeTiverPontosSuficiente() throws Exception{
-        AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
-        Personagem manuel = new Personagem("Manuel", atributosDeBatalha);
+        Personagem manuel = new Personagem("Manuel");
         manuel.setPontosDeBatalha(3L);
 
         String esperado = "FOR: 0, TEC: 0, VIT: 0, MAG: 0, AGI: 0, SOR: 0";
@@ -44,12 +42,23 @@ public class PersonagemTest {
 
     @Test
     void oPersonagemDeveConseguirAcessarEModificarAtributosSociais() throws NaoExistemPontosSuficientes {
-        AtributosSociais atributosSociais = new AtributosSociais();
-        Personagem jaden = new Personagem("Jaden", new AtributosDeBatalha(), atributosSociais);
+        Personagem jaden = new Personagem("Jaden");
         jaden.setPontosSociais(6L);
 
         jaden.addPontoACharme(5L);
-        String esperado = "CONHECIMEHTOS: 0, DISCIPLINA: 0, EMPATIA: 0, CHARME: 5, EXPRESSÃO: 0, CORAGEM: 0";
+        jaden.addPontoADisciplina(1L);
+        String esperado = "CONHECIMENTO: 0, DISCIPLINA: 1, EMPATIA: 0, CHARME: 5, EXPRESSÃO: 0, CORAGEM: 0";
         assertThat(jaden.printAtributosSociais()).isEqualTo(esperado);
+
+        assertThatThrownBy( () -> jaden.addPontoAExpressao(1L))
+                .isInstanceOf(NaoExistemPontosSuficientes.class)
+                .hasMessage("Não existem pontos suficientes");
+
+        jaden.setPontosSociais(2L);
+        jaden.addPontoACoragem(1L);
+
+        esperado = "CONHECIMENTO: 0, DISCIPLINA: 1, EMPATIA: 0, CHARME: 5, EXPRESSÃO: 0, CORAGEM: 1";
+        assertThat(jaden.printAtributosSociais()).isEqualTo(esperado);
+        assertThat(jaden.getPontosSociais()).isEqualTo(1L);
     }
 }

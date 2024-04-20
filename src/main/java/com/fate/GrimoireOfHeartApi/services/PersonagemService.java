@@ -15,23 +15,38 @@ import java.util.Optional;
 @Transactional
 public class PersonagemService {
     //Devem ser adicionadas regras de negócio
+    //Criar as devidas exceções
     @Autowired
     private final PersonagemRepository personagemRepository;
     public void salvarPersonagem(Personagem personagem){
-        if (personagemRepository.findById(personagem.getId()).isPresent()) return;
+        if (personagemRepository.findById(personagem.getId()).isPresent()){
+            System.out.println("Personagem já existe");
+            return;
+        }
         personagemRepository.save(personagem);
     }
-    public Optional<Personagem> getPersonagemPorId(int id) throws Exception {
+    public Optional<Personagem> getPersonagemPorId(int id){
       return personagemRepository.findById(id);
     }
     public List<Personagem> getPersonagens(){
+        if (personagemRepository.findAll().isEmpty()){
+            System.out.println("Não existem personagens");
+        }
         return personagemRepository.findAll();
     }
-    public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas) throws Exception {
+    public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas){
+        if (!personagemRepository.existsById(idPersonagem)){
+            System.out.println("Não existe esse personagem");
+            return;
+        }
         Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
         actualPersonagem.ifPresent(personagem -> personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem()));
     }
     public void deletarPersonagem(int idPersonagem) throws Exception {
+        if (!personagemRepository.existsById(idPersonagem)){
+            System.out.println("Personagem não existe");
+            return;
+        }
         personagemRepository.findById(idPersonagem).ifPresent(personagemRepository::delete);
     }
 

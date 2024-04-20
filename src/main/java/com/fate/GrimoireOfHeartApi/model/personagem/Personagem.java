@@ -21,28 +21,24 @@ public class Personagem implements Serializable {
     private String nomePersonagem;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAtributosDeBatalha", referencedColumnName = "id")
-    private AtributosDeBatalha atributosDeBatalha;
+    private final AtributosDeBatalha atributosDeBatalha = new AtributosDeBatalha();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAtributosSociais", referencedColumnName = "id")
-    private AtributosSociais atributosSociais;
+    private final AtributosSociais atributosSociais = new AtributosSociais();
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column
-    private int nivel;
+    private int nivel = 1;
+    @Column
+    private int vida;
     @Column
     private Long pontosDeBatalha = 0L;
     @Column
     private Long pontosSociais = 0L;
-    public Personagem(String nomePersonagem, AtributosDeBatalha atributosDeBatalha) {
+    public Personagem(String nomePersonagem) {
         this.nomePersonagem = nomePersonagem;
-        this.atributosDeBatalha = atributosDeBatalha;
     }
 
-    public Personagem(String nomePersonagem, AtributosDeBatalha atributosDeBatalha, AtributosSociais atributosSociais) {
-        this.nomePersonagem = nomePersonagem;
-        this.atributosDeBatalha = atributosDeBatalha;
-        this.atributosSociais = atributosSociais;
-    }
     public void addPontoAFor(Long valor) throws NaoExistemPontosSuficientes {
         verificacaoSeExistemPontosDeBatalhaSuficientes(valor);
         atributosDeBatalha.setForca(valor);
@@ -73,9 +69,34 @@ public class Personagem implements Serializable {
         atributosDeBatalha.setSorte(valor);
         pontosDeBatalha -= valor;
     }
+    public void addPontoAConhecimento(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setConhecimento(valor);
+        pontosSociais -= valor;
+    }
+    public void addPontoADisciplina(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setDisciplina(valor);
+        pontosSociais -= valor;
+    }
+    public void addPontoAEmpatia(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setEmpatia(valor);
+        pontosSociais -= valor;
+    }
     public void addPontoACharme(Long valor) throws NaoExistemPontosSuficientes {
         verificacaoSeExistemPontosSociaisSuficientes(valor);
         atributosSociais.setCharme(valor);
+        pontosSociais -= valor;
+    }
+    public void addPontoAExpressao(Long valor) throws NaoExistemPontosSuficientes{
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setExpressao(valor);
+        pontosSociais -= valor;
+    }
+    public void addPontoACoragem(Long valor) throws NaoExistemPontosSuficientes {
+        verificacaoSeExistemPontosSociaisSuficientes(valor);
+        atributosSociais.setCoragem(valor);
         pontosSociais -= valor;
     }
     private void verificacaoSeExistemPontosDeBatalhaSuficientes(Long valor) throws NaoExistemPontosSuficientes {

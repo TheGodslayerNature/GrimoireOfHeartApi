@@ -21,6 +21,6 @@ public class AtributosSociais implements Serializable {
     private Long expressao = 0L;
     private Long coragem = 0L;
     public String printAtributosSociais() {
-        return String.format("CONHECIMEHTOS: %d, DISCIPLINA: %d, EMPATIA: %d, CHARME: %d, EXPRESSÃO: %d, CORAGEM: %d", conhecimento,disciplina,empatia,charme,expressao,coragem);
+        return String.format("CONHECIMENTO: %d, DISCIPLINA: %d, EMPATIA: %d, CHARME: %d, EXPRESSÃO: %d, CORAGEM: %d", conhecimento,disciplina,empatia,charme,expressao,coragem);
     }
 }
