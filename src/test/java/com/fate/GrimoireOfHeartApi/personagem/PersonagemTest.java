@@ -1,8 +1,6 @@
 package com.fate.GrimoireOfHeartApi.personagem;
 
 import com.fate.GrimoireOfHeartApi.exceptions.NaoExistemPontosSuficientes;
-import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
-import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PersonagemTest {
-    @Test
+    @Test()
     void deveConseguirAcessarAtributosDeBatalha(){
         Personagem manuel = new Personagem("Manuel");
 
@@ -41,7 +39,7 @@ public class PersonagemTest {
     }
 
     @Test
-    void oPersonagemDeveConseguirAcessarEModificarAtributosSociais() throws NaoExistemPontosSuficientes {
+    void personagemDeveConseguirAcessarEModificarAtributosSociais() throws NaoExistemPontosSuficientes {
         Personagem jaden = new Personagem("Jaden");
         jaden.setPontosSociais(6L);
 
@@ -60,5 +58,46 @@ public class PersonagemTest {
         esperado = "CONHECIMENTO: 0, DISCIPLINA: 1, EMPATIA: 0, CHARME: 5, EXPRESSÃO: 0, CORAGEM: 1";
         assertThat(jaden.printAtributosSociais()).isEqualTo(esperado);
         assertThat(jaden.getPontosSociais()).isEqualTo(1L);
+    }
+
+    @Test
+    void personagemDeveTerVidaEEnergiaCalculasConformeSeusAtributos() throws NaoExistemPontosSuficientes {
+        Personagem jaden = new Personagem("Jaden");
+
+        assertThat(jaden.getVida()).isEqualTo(30);
+        assertThat(jaden.getEnergia()).isEqualTo(0);
+
+        jaden.setPontosDeBatalha(1L);
+        jaden.addPontoAVit(1L);
+
+        assertThat(jaden.getVida()).isEqualTo(31);
+        assertThat(jaden.getEnergia()).isEqualTo(1);
+
+        jaden.setPontosDeBatalha(1L);
+        jaden.addPontoAVit(1L);
+
+        assertThat(jaden.getVida()).isEqualTo(32);
+        assertThat(jaden.getEnergia()).isEqualTo(2);
+
+        jaden.setNivel(2);
+
+        assertThat(jaden.getAtributosDeBatalha().getVitalidade()).isEqualTo(2L);
+        assertThat(jaden.getNivel()).isEqualTo(2L);
+        assertThat(jaden.getVida()).isEqualTo(39);
+        assertThat(jaden.getEnergia()).isEqualTo(3);
+
+        jaden.setNivel(3);
+
+        assertThat(jaden.getAtributosDeBatalha().getVitalidade()).isEqualTo(2L);
+        assertThat(jaden.getNivel()).isEqualTo(3L);
+        assertThat(jaden.getVida()).isEqualTo(46);
+        assertThat(jaden.getEnergia()).isEqualTo(3);
+
+        jaden.setNivel(4);
+
+        assertThat(jaden.getAtributosDeBatalha().getVitalidade()).isEqualTo(2L);
+        assertThat(jaden.getNivel()).isEqualTo(4L);
+        assertThat(jaden.getVida()).isEqualTo(53);
+        assertThat(jaden.getEnergia()).isEqualTo(4);
     }
 }
