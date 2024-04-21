@@ -35,4 +35,8 @@ public class PersonagemController {
     public void deletarPersonagem(@PathVariable(value = "id") int idPersonagem) throws Exception {
         personagemService.deletarPersonagem(idPersonagem);
     }
+
+    public void deletarTodos() {
+        personagemService.deletarTodos();
+    }
 }

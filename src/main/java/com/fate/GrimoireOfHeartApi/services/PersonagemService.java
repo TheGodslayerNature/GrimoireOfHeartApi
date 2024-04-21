@@ -40,6 +40,7 @@ public class PersonagemService {
             return;
         }
         Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
+        System.out.println(actualPersonagem);
         actualPersonagem.ifPresent(personagem -> personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem()));
     }
     public void deletarPersonagem(int idPersonagem) throws Exception {
@@ -50,4 +51,7 @@ public class PersonagemService {
         personagemRepository.findById(idPersonagem).ifPresent(personagemRepository::delete);
     }
 
+    public void deletarTodos() {
+        personagemRepository.deleteAll();
+    }
 }

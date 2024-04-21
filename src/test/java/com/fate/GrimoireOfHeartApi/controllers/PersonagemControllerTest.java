@@ -2,6 +2,7 @@ package com.fate.GrimoireOfHeartApi.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fate.GrimoireOfHeartApi.model.persona.Persona;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,9 @@ public class PersonagemControllerTest {
     private Personagem personagemManuel;
     private Personagem personagemManuela;
     private Personagem personagemJames;
+    private Persona ariel;
+    private Persona magno;
+    private Persona cuchulain;
 
     private String transformarParaJson(Object object) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -37,16 +41,18 @@ public class PersonagemControllerTest {
     }
     @BeforeEach
     void setUp() {
-        personagemManuel = new Personagem("Alessandro");
-        personagemManuela = new Personagem("Manuela");
-        personagemJames = new Personagem("Navas");
+        ariel = new Persona("Ariel");
+        magno = new Persona("Magno");
+        cuchulain = new Persona("cuchulain");
+
+        personagemManuel = new Personagem("Alessandro", ariel);
+        personagemManuela = new Personagem("Manuela", magno);
+        personagemJames = new Personagem("Navas", cuchulain);
     }
 
     @AfterEach
-    void tearDown() throws Exception {
-        personagemController.deletarPersonagem(personagemManuel.getId());
-        personagemController.deletarPersonagem(personagemManuela.getId());
-        personagemController.deletarPersonagem(personagemJames.getId());
+    void tearDown() {
+        personagemController.deletarTodos();
     }
 
     @Test
@@ -89,6 +95,7 @@ public class PersonagemControllerTest {
         mockMvc.perform(put("/personagem/atualizarPersonagem/1")
                 .contentType(MediaType.APPLICATION_JSON).content(transformarParaJson(personagemManuela)));
 
+        personagemManuela.setId(1);
         assertThat(personagemController.getPersonagem(1).orElseThrow()).isEqualTo(personagemManuela);
     }
 

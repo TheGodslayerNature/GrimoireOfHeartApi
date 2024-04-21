@@ -3,6 +3,7 @@ package com.fate.GrimoireOfHeartApi.model.personagem;
 import com.fate.GrimoireOfHeartApi.exceptions.NaoExistemPontosSuficientes;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
+import com.fate.GrimoireOfHeartApi.model.persona.Persona;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,11 +38,17 @@ public class Personagem implements Serializable {
     private Long pontosDeBatalha = 0L;
     @Column
     private Long pontosSociais = 0L;
-
+    @OneToOne
+    @JoinColumn(name = "idPersona")
+    private Persona persona;
     public Personagem(String nomePersonagem) {
         this.nomePersonagem = nomePersonagem;
         calcularVida();
         calcularEnergia();
+    }
+    public Personagem(String nomePersonagem, Persona persona){
+        this.nomePersonagem = nomePersonagem;
+        this.persona = persona;
     }
     public void setNivel(int nivel){
         this.nivel = nivel;
