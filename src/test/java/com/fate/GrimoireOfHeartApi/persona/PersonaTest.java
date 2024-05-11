@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PersonaTest {
     @Test
@@ -28,5 +29,19 @@ public class PersonaTest {
         assertThat(persona.getMeusTiposDeMagia().get(1).getNome()).isEqualTo("Luz");
         assertThat(persona.getMeusTiposDeMagia().get(1).getCategoria()).isEqualTo("Dano");
         assertThat(persona.getMeusTiposDeMagia().get(1).getDescricao()).isEqualTo(descricaoEsperada);
+    }
+
+    @Test
+    void personaDeveTerInteracoesComOsTiposDeMagia() {
+        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
+        tipoDeMagias.add(TiposDeMagia.Fogo);
+        Persona persona = new Persona("Ariane",tipoDeMagias);
+        persona.addResistencia(TiposDeMagia.Luz);
+
+        assertThat(persona.interacoesDeMagias()).isEqual("Null");
+
+        tipoDeMagias.add(TiposDeMagia.Luz);
+        persona = new Persona("Ariane",tipoDeMagias);
+        assertThat(persona.interacoesDeMagias()).isEqual("Luz: resiste");
     }
 }
