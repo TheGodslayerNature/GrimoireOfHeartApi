@@ -35,12 +35,20 @@ public class Persona implements Serializable {
         this.meusTiposDeMagia = meusTiposDeMagia;
     }
     public void addResistencia(TiposDeMagia tiposDeMagia){
-        meusTiposDeMagia.forEach( (magia) -> {
-            if (magia.equals(tiposDeMagia)){
-                interacoesDeMagias.add(tiposDeMagia.getNome() + ": resiste");
-            } else {
-                interacoesDeMagias.add("vc não possui o tipo da magia");
-            }
-        });
+        if (meusTiposDeMagia.contains(tiposDeMagia)){
+            interacoesDeMagias.add(tiposDeMagia.getNome() + ": Resiste");
+        }
+        else {
+            interacoesDeMagias.add("Você não possui o tipo da magia");
+        }
+    }
+
+    public void addFraqueza(TiposDeMagia tiposDeMagia) {
+        if (meusTiposDeMagia.contains(tiposDeMagia)){
+            interacoesDeMagias.add("Você não pode ser fraco a um tipo seu");
+        }
+        else {
+            interacoesDeMagias.add(tiposDeMagia.getNome() + ": Fraco");
+        }
     }
 }
