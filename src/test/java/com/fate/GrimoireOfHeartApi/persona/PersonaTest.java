@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PersonaTest {
     @Test
@@ -16,8 +15,7 @@ public class PersonaTest {
         tipoDeMagias.add(TiposDeMagia.Fogo);
         Persona persona = new Persona("Ariane",tipoDeMagias);
 
-        String descricaoEsperada = "Um destrutivo Tipo de dano focado em intenso dano em área, ao custo de \n" +
-                "menor dano contra alvos individuais.";
+        String descricaoEsperada = "Um destrutivo Tipo de dano focado em intenso dano em área, ao custo de " + "menor dano contra alvos individuais.";
         assertThat(persona.getMeusTiposDeMagia().get(0).getNome()).isEqualTo("Fogo");
         assertThat(persona.getMeusTiposDeMagia().get(0).getCategoria()).isEqualTo("Dano");
         assertThat(persona.getMeusTiposDeMagia().get(0).getDescricao()).isEqualTo(descricaoEsperada);
@@ -32,16 +30,17 @@ public class PersonaTest {
     }
 
     @Test
-    void personaDeveTerInteracoesComOsTiposDeMagia() {
+    void personaDeveTerResistenciaATiposDeMagia() {
         ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
         tipoDeMagias.add(TiposDeMagia.Fogo);
         Persona persona = new Persona("Ariane",tipoDeMagias);
         persona.addResistencia(TiposDeMagia.Luz);
 
-        assertThat(persona.interacoesDeMagias()).isEqual("Null");
+        assertThat(persona.getInteracoesDeMagias().get(0)).isEqualTo("vc não possui o tipo da magia");
 
         tipoDeMagias.add(TiposDeMagia.Luz);
         persona = new Persona("Ariane",tipoDeMagias);
-        assertThat(persona.interacoesDeMagias()).isEqual("Luz: resiste");
+        persona.addResistencia(TiposDeMagia.Luz);
+        assertThat(persona.getInteracoesDeMagias().get(1)).isEqualTo("Luz: resiste");
     }
 }

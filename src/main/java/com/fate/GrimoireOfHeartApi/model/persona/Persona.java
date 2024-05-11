@@ -25,11 +25,22 @@ public class Persona implements Serializable {
     private int pontosDeMagia = 6;
     @Column
     private ArrayList<TiposDeMagia> meusTiposDeMagia = new ArrayList<>();
+    @Column
+    private ArrayList<String> interacoesDeMagias = new ArrayList<>();
     public Persona(String nome) {
         this.nome = nome;
     }
     public Persona(String nome, ArrayList<TiposDeMagia> meusTiposDeMagia) {
         this.nome = nome;
         this.meusTiposDeMagia = meusTiposDeMagia;
+    }
+    public void addResistencia(TiposDeMagia tiposDeMagia){
+        meusTiposDeMagia.forEach( (magia) -> {
+            if (magia.equals(tiposDeMagia)){
+                interacoesDeMagias.add(tiposDeMagia.getNome() + ": resiste");
+            } else {
+                interacoesDeMagias.add("vc não possui o tipo da magia");
+            }
+        });
     }
 }

@@ -38,7 +38,7 @@ public class Personagem implements Serializable {
     private Long pontosDeBatalha = 0L;
     @Column
     private Long pontosSociais = 0L;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idPersona")
     private Persona persona;
     public Personagem(String nomePersonagem) {
