@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 @Entity(name = "persona")
 @Table(name = "persona")
@@ -26,7 +28,7 @@ public class Persona implements Serializable {
     @Column
     private ArrayList<TiposDeMagia> meusTiposDeMagia = new ArrayList<>();
     @Column
-    private ArrayList<String> interacoesDeMagias = new ArrayList<>();
+    private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
     public Persona(String nome) {
         this.nome = nome;
     }
@@ -34,21 +36,22 @@ public class Persona implements Serializable {
         this.nome = nome;
         this.meusTiposDeMagia = meusTiposDeMagia;
     }
+
+    public HashMap<String,String> criarInteracoesMagicas(){
+        HashMap<String,String> interacoes = new HashMap<>();
+        interacoes.put("Físico","Neutro");
+        interacoes.put("Fogo","Neutro");
+        interacoes.put("Luz", "Neutro");
+        interacoes.put("Trevas","Neutro");
+        return interacoes;
+    }
     public void addResistencia(TiposDeMagia tiposDeMagia){
-        if (meusTiposDeMagia.contains(tiposDeMagia)){
-            interacoesDeMagias.add(tiposDeMagia.getNome() + ": Resiste");
-        }
-        else {
-            interacoesDeMagias.add("Você não possui o tipo da magia");
-        }
+        if (meusTiposDeMagia.contains(tiposDeMagia))
+            interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
     }
 
     public void addFraqueza(TiposDeMagia tiposDeMagia) {
-        if (meusTiposDeMagia.contains(tiposDeMagia)){
-            interacoesDeMagias.add("Você não pode ser fraco a um tipo seu");
-        }
-        else {
-            interacoesDeMagias.add(tiposDeMagia.getNome() + ": Fraco");
-        }
+        if (!meusTiposDeMagia.contains(tiposDeMagia))
+            interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
     }
 }

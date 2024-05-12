@@ -36,12 +36,12 @@ public class PersonaTest {
         Persona persona = new Persona("Ariane",tipoDeMagias);
         persona.addResistencia(TiposDeMagia.Luz);
 
-        assertThat(persona.getInteracoesDeMagias().get(0)).isEqualTo("Você não possui o tipo da magia");
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
 
         tipoDeMagias.add(TiposDeMagia.Luz);
         persona = new Persona("Ariane",tipoDeMagias);
         persona.addResistencia(TiposDeMagia.Luz);
-        assertThat(persona.getInteracoesDeMagias().get(0)).isEqualTo("Luz: Resiste");
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Resiste");
     }
 
     @Test
@@ -52,9 +52,9 @@ public class PersonaTest {
         Persona persona = new Persona("Ariane",tipoDeMagias);
         persona.addFraqueza(TiposDeMagia.Trevas);
 
-        assertThat(persona.getInteracoesDeMagias().get(0)).isEqualTo("Trevas: Fraco");
+        assertThat(persona.getInteracoesDeMagias().get("Trevas")).isEqualTo("Fraco");
 
         persona.addFraqueza(TiposDeMagia.Luz);
-        assertThat(persona.getInteracoesDeMagias().get(1)).isEqualTo("Você não pode ser fraco a um tipo seu");
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
     }
 }
