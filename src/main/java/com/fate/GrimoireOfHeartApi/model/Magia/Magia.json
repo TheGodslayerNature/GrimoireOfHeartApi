@@ -1,0 +1,37 @@
+{
+  "Físico": {
+    "Tier 1": [
+      {
+        "Nome" : "Rachador de Crânios",
+        "Categorias" : "Mono,Atordoar,Status,Físico (A)",
+        "Tempo": "Padrão",
+        "Alcance" : "1 alvo dentro de 5 metros ",
+        "Duracao" : "Instantânea",
+        "Efeito" : "Acerto: FORd6 dano Físico e Chance de Atordoar: 20%. Adicione 5% para cada ponto da rolagem de acerto acima da esquiva do inimigo.",
+        "Descricao" : "Um golpe vertical mirando no topo da cabeça."
+      },
+      {
+        "Nome" : "Mergulho de Ataque",
+        "Categorias" : "Mono,Físico (A)",
+        "Tempo": "Padrão",
+        "Alcance" : "1 alvo dentro de 2 metros ",
+        "Duracao" : "Instantânea",
+        "Efeito" : "Acerto: FORd8 dano Físico.",
+        "Descricao" : "A Persona salta e ataca durante sua descida, tentando atravessar seu alvo diagonalmente."
+      }
+    ]
+  },
+  "Fogo" : {
+    "Tier 1" : [
+      {
+        "Nome" : "Agi",
+        "Categorias" : "Mono,Fogo (A)",
+        "Tempo": "Padrão",
+        "Alcance" : "1 alvo dentro de 8 metros ",
+        "Duracao" : "Instantânea",
+        "Efeito" : "Acerto: MAGd6 dano de Fogo.",
+        "Descricao" : "Uma pequena bola de fogo atinge o inimigo."
+      }
+    ]
+  }
+}
