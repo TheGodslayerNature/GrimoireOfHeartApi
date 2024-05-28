@@ -8,6 +8,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 @Entity(name = "persona")
@@ -32,7 +33,7 @@ public class Persona implements Serializable {
     private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
     @Column
     @OneToMany
-    private Magia[] deck = new Magia[16];
+    private Magia[] deckDeMagia = new Magia[16];
     public Persona(String nome) {
         this.nome = nome;
     }
@@ -74,6 +75,29 @@ public class Persona implements Serializable {
          */
     }
     public void addMagia(Magia magia) {
-        deck[0] = magia;
+        for (int i = 0; i < deckDeMagia.length; i++) {
+            if (deckDeMagia[i] == null){
+                deckDeMagia[i] = magia;
+                break;
+            }
+        }
+    }
+
+    public void removerMagia(Magia magia) {
+        for (int i = 0; i < deckDeMagia.length; i++) {
+            if (deckDeMagia[i] == magia){
+                deckDeMagia[i] = null;
+                break;
+            }
+        }
+    }
+
+    public void atualizarMagia(Magia magia){
+        for (int i = 0; i < deckDeMagia.length; i++) {
+             if (!Objects.equals(deckDeMagia[i].getNome(), magia.getNome())){
+                deckDeMagia[i] = magia;
+                break;
+            }
+        }
     }
 }

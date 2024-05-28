@@ -95,7 +95,6 @@ public class PersonagemControllerTest {
         mockMvc.perform(put("/personagem/atualizarPersonagem/1")
                 .contentType(MediaType.APPLICATION_JSON).content(transformarParaJson(personagemManuela)));
 
-        personagemManuela.setId(1);
         assertThat(personagemController.getPersonagem(1).orElseThrow()).isEqualTo(personagemManuela);
     }
 

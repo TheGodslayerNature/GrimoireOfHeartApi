@@ -39,9 +39,8 @@ public class PersonagemService {
             System.out.println("Não existe esse personagem");
             return;
         }
-        Optional<Personagem> actualPersonagem = personagemRepository.findById(idPersonagem);
-        System.out.println(actualPersonagem);
-        actualPersonagem.ifPresent(personagem -> personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem()));
+        novasCaracteristicas.setId(idPersonagem);
+        personagemRepository.save(novasCaracteristicas);
     }
     public void deletarPersonagem(int idPersonagem) throws Exception {
         if (!personagemRepository.existsById(idPersonagem)){

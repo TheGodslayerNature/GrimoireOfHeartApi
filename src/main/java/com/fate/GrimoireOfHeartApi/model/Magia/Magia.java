@@ -12,6 +12,7 @@ import java.io.Serializable;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Magia implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

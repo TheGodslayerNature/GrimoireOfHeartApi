@@ -3,13 +3,10 @@ package com.fate.GrimoireOfHeartApi.persona;
 import com.fate.GrimoireOfHeartApi.model.Magia.Magia;
 import com.fate.GrimoireOfHeartApi.model.persona.Persona;
 import com.fate.GrimoireOfHeartApi.model.tiposdemagia.TiposDeMagia;
-import org.apache.tomcat.util.json.ParseException;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,6 +14,19 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PersonaTest {
+
+    public Magia construirMagia(String nomeDoTipoDeMagia, int localizacaoDaMagia) throws Exception {
+        String content = new String(Files.readAllBytes(Paths.get("src/main/java/com/fate/GrimoireOfHeartApi/model/Magia/Magia.json")));
+        JSONObject jsonObject = new JSONObject(content);
+
+        JSONObject obj = jsonObject.getJSONObject(nomeDoTipoDeMagia);
+        JSONArray magias = obj.getJSONArray("Tier 1");
+        JSONObject magiaEscolhida = magias.getJSONObject(localizacaoDaMagia);
+
+        Magia magia = new Magia(1,magiaEscolhida.get("Nome").toString(),magiaEscolhida.get("Categorias").toString(),magiaEscolhida.get("Tempo").toString(),
+                magiaEscolhida.get("Alcance").toString(),magiaEscolhida.get("Duracao").toString(),magiaEscolhida.get("Efeito").toString(),magiaEscolhida.get("Descricao").toString());
+        return magia;
+    }
     @Test
     void deveConseguirAdicionarTiposDeMagia() {
         ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
@@ -42,8 +52,9 @@ public class PersonaTest {
         ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
         tipoDeMagias.add(TiposDeMagia.Fogo);
         Persona persona = new Persona("Ariane",tipoDeMagias);
-        persona.addResistencia(TiposDeMagia.Luz);
+        persona.addResistencia(TiposDeMagia.Fogo);
 
+        assertThat(persona.getInteracoesDeMagias().get("Fogo")).isEqualTo("Resiste");
         assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
 
         tipoDeMagias.add(TiposDeMagia.Luz);
@@ -67,7 +78,7 @@ public class PersonaTest {
     }
 
     @Test
-    void personaDeveConseguirAdicionarUmaMagiaNoSeuDeck() throws IOException, JSONException, ParseException {
+    void personaDeveConseguirAdicionarUmaMagiaNoSeuDeck() throws Exception {
         ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
         tipoDeMagias.add(TiposDeMagia.Fogo);
         tipoDeMagias.add(TiposDeMagia.Luz);
@@ -79,10 +90,51 @@ public class PersonaTest {
         JSONObject obj = jsonObject.getJSONObject("Físico");
         JSONArray magias = obj.getJSONArray("Tier 1");
         JSONObject magiaEscolhida = magias.getJSONObject(0);
+
         Magia magia = new Magia(1,magiaEscolhida.get("Nome").toString(),magiaEscolhida.get("Categorias").toString(),magiaEscolhida.get("Tempo").toString(),
                 magiaEscolhida.get("Alcance").toString(),magiaEscolhida.get("Duracao").toString(),magiaEscolhida.get("Efeito").toString(),magiaEscolhida.get("Descricao").toString());
 
         persona.addMagia(magia);
-        assertThat(magia.getNome()).isEqualTo(persona.getDeck()[0].getNome());
+        assertThat(magia.getNome()).isEqualTo(persona.getDeckDeMagia()[0].getNome());
+
+        magia = construirMagia("Fogo",0);
+        persona.addMagia(magia);
+        assertThat("Rachador de Crânios").isEqualTo(persona.getDeckDeMagia()[0].getNome());
+        assertThat("Agi").isEqualTo(persona.getDeckDeMagia()[1].getNome());
+    }
+
+    @Test
+    void deveConseguirRetirarUmaMagiaDoDeck() throws Exception{
+        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
+        tipoDeMagias.add(TiposDeMagia.Fogo);
+        tipoDeMagias.add(TiposDeMagia.Luz);
+        Persona persona = new Persona("Ariane",tipoDeMagias);
+
+        Magia magia = construirMagia("Físico",0);
+        persona.addMagia(magia);
+        assertThat(magia.getNome()).isEqualTo(persona.getDeckDeMagia()[0].getNome());
+
+        Magia magiaAtualizada = construirMagia("Fogo", 0);
+        persona.addMagia(magiaAtualizada);
+        assertThat("Agi").isEqualTo(persona.getDeckDeMagia()[1].getNome());
+
+        persona.removerMagia(magia);
+        assertThat(persona.getDeckDeMagia()[0]).isEqualTo(null);
+    }
+
+    @Test
+    void deveConseguirTrocarUmaMagiaDoDeck() throws Exception {
+        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
+        tipoDeMagias.add(TiposDeMagia.Fogo);
+        tipoDeMagias.add(TiposDeMagia.Luz);
+        Persona persona = new Persona("Ariane",tipoDeMagias);
+
+        Magia magia = construirMagia("Físico",0);
+        persona.addMagia(magia);
+        assertThat(magia.getNome()).isEqualTo(persona.getDeckDeMagia()[0].getNome());
+
+        Magia magiaAtualizada = construirMagia("Fogo", 0);
+        persona.atualizarMagia(magiaAtualizada);
+        assertThat("Agi").isEqualTo(persona.getDeckDeMagia()[0].getNome());
     }
 }
