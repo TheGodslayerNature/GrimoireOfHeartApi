@@ -74,7 +74,7 @@ public class PersonaTest {
         assertThat(persona.getInteracoesDeMagias().get("Trevas")).isEqualTo("Fraco");
 
         persona.addFraqueza(TiposDeMagia.Luz);
-        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Fraco");
     }
 
     @Test
@@ -136,5 +136,23 @@ public class PersonaTest {
         Magia magiaAtualizada = construirMagia("Fogo", 0);
         persona.atualizarMagia(magiaAtualizada);
         assertThat("Agi").isEqualTo(persona.getDeckDeMagia()[0].getNome());
+    }
+
+    @Test
+    void personaPodeTerBonusDeHabilidadesSociaisOuDeCombate() {
+        Persona persona = new Persona();
+
+        String expectedBonus = "FOR: 0, TEC: 0, VIT: 0, MAG: 0, AGI: 0, SOR: 0 || CONHECIMENTO: 0, DISCIPLINA: 0, EMPATIA: 0, CHARME: 0, EXPRESSÃO: 0, CORAGEM: 0";
+        assertThat(expectedBonus).isEqualTo(persona.printBonus());
+    }
+
+    @Test
+    void personaDeveConseguirAdiconarOsPontosDeAtributos() {
+        Persona persona = new Persona();
+
+        persona.addPontoAFor(3L);
+        persona.addPontoACoragem(7L);
+        String expectedBonus = "FOR: 3, TEC: 0, VIT: 0, MAG: 0, AGI: 0, SOR: 0 || CONHECIMENTO: 0, DISCIPLINA: 0, EMPATIA: 0, CHARME: 0, EXPRESSÃO: 0, CORAGEM: 7";
+        assertThat(expectedBonus).isEqualTo(persona.printBonus());
     }
 }

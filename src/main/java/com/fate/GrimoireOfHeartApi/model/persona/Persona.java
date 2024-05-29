@@ -28,18 +28,31 @@ public class Persona implements Serializable {
     @Column
     private int pontosDeMagia = 6;
     @Column
+    private String conviccao;
+    @Column
+    private String habilidadeNatural;
+    @Column
     private ArrayList<TiposDeMagia> meusTiposDeMagia = new ArrayList<>();
     @Column
     private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
     @Column
     @OneToMany
     private Magia[] deckDeMagia = new Magia[16];
+    @OneToOne(cascade = CascadeType.ALL)
+    private BonusPoints bonusPoints = new BonusPoints();
     public Persona(String nome) {
         this.nome = nome;
     }
     public Persona(String nome, ArrayList<TiposDeMagia> meusTiposDeMagia) {
         this.nome = nome;
         this.meusTiposDeMagia = meusTiposDeMagia;
+    }
+
+    public Persona(String nome, ArrayList<TiposDeMagia> meusTiposDeMagia, String conviccao, String habilidadeNatural) {
+        this.nome = nome;
+        this.meusTiposDeMagia = meusTiposDeMagia;
+        this.conviccao = conviccao;
+        this.habilidadeNatural = habilidadeNatural;
     }
 
     public HashMap<String,String> criarInteracoesMagicas(){
@@ -99,5 +112,46 @@ public class Persona implements Serializable {
                 break;
             }
         }
+    }
+
+    public void addPontoAFor(Long valor){
+        bonusPoints.addPontoAFor(valor);
+    }
+    public void addPontoATec(Long valor){
+        bonusPoints.addPontoATec(valor);
+    }
+    public void addPontoAVit(Long valor){
+        bonusPoints.addPontoAVit(valor);
+    }
+    public void addPontoAAgi(Long valor){
+        bonusPoints.addPontoAAgi(valor);
+    }
+    public void addPontoAMag(Long valor){
+        bonusPoints.addPontoAMag(valor);
+    }
+    public void addPontoASor(Long valor){
+        bonusPoints.addPontoASor(valor);
+    }
+    public void addPontoAConhecimento(Long valor){
+        bonusPoints.addPontoAConhecimento(valor);
+    }
+    public void addPontoADisciplina(Long valor){
+        bonusPoints.addPontoADisciplina(valor);
+    }
+    public void addPontoAEmpatia(Long valor){
+        bonusPoints.addPontoAEmpatia(valor);
+    }
+    public void addPontoACharme(Long valor){
+        bonusPoints.addPontoACharme(valor);
+    }
+    public void addPontoAExpressao(Long valor){
+        bonusPoints.addPontoAExpressao(valor);
+    }
+    public void addPontoACoragem(Long valor){
+        bonusPoints.addPontoACoragem(valor);
+    }
+
+    public String printBonus(){
+        return bonusPoints.printBonus();
     }
 }

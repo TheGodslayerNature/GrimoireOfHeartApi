@@ -18,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class Personagem implements Serializable {
+    // Criar Um objeto Habilidades sociais que guarde o Tier sociais e ganhe habilidades com determinado nivel de tier
     @Column
     private String nomePersonagem;
     @OneToOne(cascade = CascadeType.ALL)
