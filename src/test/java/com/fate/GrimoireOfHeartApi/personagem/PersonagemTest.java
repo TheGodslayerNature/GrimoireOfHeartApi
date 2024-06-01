@@ -1,6 +1,8 @@
 package com.fate.GrimoireOfHeartApi.personagem;
 
 import com.fate.GrimoireOfHeartApi.exceptions.NaoExistemPontosSuficientes;
+import com.fate.GrimoireOfHeartApi.model.Klass.Coringa;
+import com.fate.GrimoireOfHeartApi.model.Klass.Klass;
 import com.fate.GrimoireOfHeartApi.model.persona.Persona;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.Test;
@@ -107,5 +109,15 @@ public class PersonagemTest {
         Personagem jaden = new Personagem("Jaden", persona);
 
         assertThat(jaden.getPersona().getNome()).isEqualTo("Ariane");
+    }
+
+    @Test
+    void criarPersonagemComClasse() {
+        Coringa coringa = new Coringa("Coringa");
+        Personagem personagem = new Personagem("Jaden", coringa);
+
+        //Tentar conseguir pegar as habilidades
+        assertThat(personagem.getKlass().getNomeDaClasse()).isEqualTo("Coringa");
+        assertThat(personagem.getKlass().getHabilidades().get(0)).isEqualTo("Versatilidade");
     }
 }

@@ -1,6 +1,7 @@
 package com.fate.GrimoireOfHeartApi.model.personagem;
 
 import com.fate.GrimoireOfHeartApi.exceptions.NaoExistemPontosSuficientes;
+import com.fate.GrimoireOfHeartApi.model.Klass.Klass;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
 import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.persona.Persona;
@@ -19,6 +20,10 @@ import java.io.Serializable;
 @ToString
 public class Personagem implements Serializable {
     // Criar Um objeto Habilidades sociais que guarde o Tier sociais e ganhe habilidades com determinado nivel de tier
+    // Criar bag e items
+    // Nas classes dividir o nome das habilidades com o que elas fazem
+    // Conseguir uma forma de ter os danos da magia de forma apropriada
+
     @Column
     private String nomePersonagem;
     @OneToOne(cascade = CascadeType.ALL)
@@ -42,6 +47,9 @@ public class Personagem implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idPersona")
     private Persona persona;
+    @Column
+//    @JoinColumn(name = "idKlass", referencedColumnName = "id")
+    private Klass klass;
     public Personagem(String nomePersonagem) {
         this.nomePersonagem = nomePersonagem;
         calcularVida();
@@ -50,6 +58,10 @@ public class Personagem implements Serializable {
     public Personagem(String nomePersonagem, Persona persona){
         this.nomePersonagem = nomePersonagem;
         this.persona = persona;
+    }
+    public Personagem(String nomePersonagem, Klass klass){
+        this.nomePersonagem = nomePersonagem;
+        this.klass = klass;
     }
     public void setNivel(int nivel){
         this.nivel = nivel;
