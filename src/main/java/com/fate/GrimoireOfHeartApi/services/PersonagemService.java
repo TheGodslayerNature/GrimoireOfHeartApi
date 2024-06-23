@@ -20,13 +20,9 @@ public class PersonagemService {
     @Autowired
     private final PersonagemRepository personagemRepository;
     public Personagem salvarPersonagem(Personagem personagem){
-        if (personagemRepository.findById(personagem.getId()).isPresent()){
-            System.out.println("Personagem já existe");
-            return new Personagem();
-        }
         return personagemRepository.save(personagem);
     }
-    public Optional<Personagem> getPersonagemPorId(int id){
+    public Optional<Personagem> getPersonagemPorId(long id){
       return personagemRepository.findById(id);
     }
     public List<Personagem> getPersonagens(){
@@ -35,14 +31,12 @@ public class PersonagemService {
         }
         return personagemRepository.findAll();
     }
-    public Personagem atualizarPersonagem(Personagem novasCaracteristicas){
-        if (!personagemRepository.existsById(novasCaracteristicas.getId())){
-            System.out.println("Não existe esse personagem");
-            return new Personagem();
-        }
-        return personagemRepository.save(novasCaracteristicas);
+    public Personagem atualizarPersonagem(Personagem novasCaracteristicas, long personagemId){
+        Personagem personagem = personagemRepository.getReferenceById(personagemId);
+        personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem());
+        return personagem;
     }
-    public void deletarPersonagem(int idPersonagem) throws Exception {
+    public void deletarPersonagem(long idPersonagem) throws Exception {
         if (!personagemRepository.existsById(idPersonagem)){
             System.out.println("Personagem não existe");
             return;

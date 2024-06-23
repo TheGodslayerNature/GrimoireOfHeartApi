@@ -12,13 +12,12 @@ public class PersonagemMapper {
     public static Personagem toPersonagem(PersonagemRequest personagemRequest){
         Personagem personagem = new Personagem();
         personagem.setNomePersonagem(personagemRequest.nomePersonagem());
-        personagem.setPersona(new Persona("Alice"));
 
         return personagem;
     }
 
     public static PersonagemResponse toPersonagemResponse(Personagem personagem){
-        PersonagemResponse personagemResponse = new PersonagemResponse(personagem.getNomePersonagem(), personagem.getPersona().getNome());
+        PersonagemResponse personagemResponse = new PersonagemResponse(personagem.getNomePersonagem());
 
         return personagemResponse;
     }
@@ -27,7 +26,7 @@ public class PersonagemMapper {
         List<PersonagemResponse> personagemResponses = new ArrayList<>();
 
         for (Personagem personagem:personagens) {
-            PersonagemResponse personagemResponse = new PersonagemResponse(personagem.getNomePersonagem(), personagem.getPersona().getNome());
+            PersonagemResponse personagemResponse = new PersonagemResponse(personagem.getNomePersonagem());
             personagemResponses.add(personagemResponse);
         }
         return personagemResponses;

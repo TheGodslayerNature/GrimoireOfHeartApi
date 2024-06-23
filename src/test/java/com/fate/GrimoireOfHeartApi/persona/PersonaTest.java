@@ -47,36 +47,35 @@ public class PersonaTest {
         assertThat(persona.getMeusTiposDeMagia().get(1).getDescricao()).isEqualTo(descricaoEsperada);
     }
 
-//    Arrumar uma forma de adicionar as resistencias e persistilas
-//    @Test
-//    void personaDeveTerResistenciaATiposDeMagia() {
-//        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
-//        tipoDeMagias.add(TiposDeMagia.Fogo);
-//        Persona persona = new Persona("Ariane",tipoDeMagias);
-//        persona.addResistencia(TiposDeMagia.Fogo);
-//
-//        assertThat(persona.getInteracoesDeMagias().get("Fogo")).isEqualTo("Resiste");
-//        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
-//
-//        tipoDeMagias.add(TiposDeMagia.Luz);
-//        persona = new Persona("Ariane",tipoDeMagias);
-//        persona.addResistencia(TiposDeMagia.Luz);
-//        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Resiste");
-//    }
-//
-//    @Test
-//    void personaDeveConseguirAdiconarFraquezas() {
-//        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
-//        tipoDeMagias.add(TiposDeMagia.Fogo);
-//        tipoDeMagias.add(TiposDeMagia.Luz);
-//        Persona persona = new Persona("Ariane",tipoDeMagias);
-//        persona.addFraqueza(TiposDeMagia.Trevas);
-//
-//        assertThat(persona.getInteracoesDeMagias().get("Trevas")).isEqualTo("Fraco");
-//
-//        persona.addFraqueza(TiposDeMagia.Luz);
-//        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Fraco");
-//    }
+    @Test
+    void personaDeveTerResistenciaATiposDeMagia() {
+        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
+        tipoDeMagias.add(TiposDeMagia.Fogo);
+        Persona persona = new Persona("Ariane",tipoDeMagias);
+        persona.addResistencia(TiposDeMagia.Fogo);
+
+        assertThat(persona.getInteracoesDeMagias().get("Fogo")).isEqualTo("Resiste");
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Neutro");
+
+        tipoDeMagias.add(TiposDeMagia.Luz);
+        persona = new Persona("Ariane",tipoDeMagias);
+        persona.addResistencia(TiposDeMagia.Luz);
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Resiste");
+    }
+
+    @Test
+    void personaDeveConseguirAdiconarFraquezas() {
+        ArrayList<TiposDeMagia> tipoDeMagias = new ArrayList<>();
+        tipoDeMagias.add(TiposDeMagia.Fogo);
+        tipoDeMagias.add(TiposDeMagia.Luz);
+        Persona persona = new Persona("Ariane",tipoDeMagias);
+        persona.addFraqueza(TiposDeMagia.Trevas);
+
+        assertThat(persona.getInteracoesDeMagias().get("Trevas")).isEqualTo("Fraco");
+
+        persona.addFraqueza(TiposDeMagia.Luz);
+        assertThat(persona.getInteracoesDeMagias().get("Luz")).isEqualTo("Fraco");
+    }
 
     @Test
     void personaDeveConseguirAdicionarUmaMagiaNoSeuDeck() throws Exception {

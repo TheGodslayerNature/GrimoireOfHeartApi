@@ -30,7 +30,7 @@ public class PersonagemServiceTest {
 
         verify(personagemRepository).save(new Personagem("Madelin"));
 
-        when(personagemRepository.findById(1)).thenReturn(Optional.of(personagem));
+        when(personagemRepository.findById(1L)).thenReturn(Optional.of(personagem));
 
         Optional<Personagem> esperado = personagemService.getPersonagemPorId(1);
 

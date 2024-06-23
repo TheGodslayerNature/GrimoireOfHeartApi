@@ -33,12 +33,6 @@ public class PersonagemControllerTest {
     private PersonagemController personagemController;
     @Autowired
     private MockMvc mockMvc;
-    private Personagem personagemManuel;
-    private Personagem personagemManuela;
-    private Personagem personagemJames;
-    private Persona ariel;
-    private Persona magno;
-    private Persona cuchulain;
 
     private String transformarParaJson(Object object) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -46,13 +40,7 @@ public class PersonagemControllerTest {
     }
     @BeforeEach
     void setUp() {
-        ariel = new Persona("Ariel");
-        magno = new Persona("Magno");
-        cuchulain = new Persona("cuchulain");
 
-        personagemManuel = new Personagem("Alessandro", ariel);
-        personagemManuela = new Personagem("Manuela", magno);
-        personagemJames = new Personagem("Navas", cuchulain);
     }
 
     @AfterEach
@@ -70,42 +58,58 @@ public class PersonagemControllerTest {
                         .content(transformarParaJson(request)))
                 .andReturn().getResponse();
 
+        String[] parts = resultado.getContentAsString().split("[{}]");
+
         assertThat(HttpStatus.CREATED.value()).isEqualTo(resultado.getStatus());
-        assertThat(resultado.getContentAsString()).isEqualTo("HEY");
-//        assertThat(personagemController.getPersonagem(personagemManuel.getId()).orElseThrow()).isEqualTo(personagemManuel);
+        assertThat(parts[1]).isEqualTo("\"nomePersonagem\":\"Ariel\"");
     }
 
-//    @Test
-//    void deveRetornarUmPersonagemJsonAoFazerSuaSolicitacao() throws Exception {
-//        personagemController.salvarPersonagem(personagemManuel);
-//
-//        mockMvc.perform(post("/personagem/salvarPersonagem")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(transformarParaJson(personagemManuel)));
-//
-//        MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/getPersonagem/1"))
-//                .andReturn().getResponse();
-//
-//                assertThat(HttpStatus.OK.value()).isEqualTo(resultado.getStatus());
+    @Test
+    void deveRetornarUmPersonagemJsonAoFazerSuaSolicitacao() throws Exception {
+        PersonagemRequest request = new PersonagemRequest("Ariel");
+        personagemController.salvarPersonagem(request);
+
+        mockMvc.perform(post("/personagem")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(transformarParaJson(request)));
+
+        MockHttpServletResponse resultado = mockMvc.perform(get("/personagem/1"))
+                .andReturn().getResponse();
+
+        String[] parts = resultado.getContentAsString().split("[{}]");
+
+        assertThat(HttpStatus.OK.value()).isEqualTo(resultado.getStatus());
+        assertThat(parts[1]).isEqualTo("\"nomePersonagem\":\"Ariel\"");
 //                assertThat(personagemController.getPersonagem(personagemManuel.getId()).orElseThrow()).isEqualTo(personagemManuel);
-//    }
-//    @Test
-//    void deveTerSucessoAoAtualizarDadosDeUmPersonagem() throws Exception{
-//        personagemController.salvarPersonagem(personagemManuel);
-//
-//        mockMvc.perform(post("/personagem/salvarPersonagem")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(transformarParaJson(personagemManuel)));
-//
-//        personagemManuel.setNomePersonagem(personagemManuela.getNomePersonagem());
-//        personagemController.atualizarPersonagem(personagemManuel);
-//
-//        mockMvc.perform(put("/personagem/atualizarPersonagem/1")
-//                .contentType(MediaType.APPLICATION_JSON).content(transformarParaJson(personagemManuela)));
-//
-//        assertThat(personagemController.getPersonagem(1).orElseThrow()).isEqualTo(personagemManuela);
-//    }
-//
+    }
+    @Test
+    void deveTerSucessoAoAtualizarDadosDeUmPersonagem() throws Exception{
+        PersonagemRequest request = new PersonagemRequest("Madone");
+        personagemController.salvarPersonagem(request);
+
+        MockHttpServletResponse resultado = mockMvc.perform(post("/personagem")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(transformarParaJson(request))).andReturn().getResponse();
+
+        request = new PersonagemRequest("Oliver");
+
+        assertThat(HttpStatus.CREATED.value()).isEqualTo(resultado.getStatus());
+        assertThat(resultado.getContentAsString().contains("Madone")).isEqualTo(true);
+
+        personagemController.atualizarPersonagem(request, 1L);
+
+        resultado = mockMvc.perform(put("/personagem/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(transformarParaJson(request)))
+                .andReturn()
+                .getResponse();
+
+        String[] parts = resultado.getContentAsString().split("[{}]");
+
+        assertThat(HttpStatus.OK.value()).isEqualTo(resultado.getStatus());
+        assertThat(parts[1]).isEqualTo("\"nomePersonagem\":\"Oliver\"");
+    }
+
 //    @Test
 //    void deveTerSucessoAoDeletarUmPersonagem() throws Exception{
 //        personagemController.salvarPersonagem(personagemManuela);

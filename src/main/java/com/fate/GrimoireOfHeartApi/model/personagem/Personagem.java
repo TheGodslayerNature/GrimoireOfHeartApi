@@ -22,7 +22,7 @@ public class Personagem implements Serializable {
     // Criar os DTOs dos objetos { "FEITO"} FALTA MELHORAR
     // Refatorar controller para passar respostas de Entity { "FEITO"} FALTA COMPLETAR O DE PERSONA E MAGIA
     // Tentar consumir a api pelo Front-End
-    // ADICIONAR AS OUTRAS CLASSES E MELHORAR A KLASS
+    // ADICIONAR AS OUTRAS CLASSES DE PERSONAGEM E MELHORAR A KLASS
     // Criar bag e items
     // Criar Um objeto Habilidades sociais que guarde o Tier sociais e ganhe habilidades com determinado nivel de tier
     // Nas classes dividir o nome das habilidades com o que elas fazem
@@ -36,8 +36,8 @@ public class Personagem implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAtributosSociais", referencedColumnName = "id")
     private final AtributosSociais atributosSociais = new AtributosSociais();
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column
     private int nivel = 1;
     @Column

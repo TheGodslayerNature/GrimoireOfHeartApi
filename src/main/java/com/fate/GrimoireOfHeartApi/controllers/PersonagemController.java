@@ -42,7 +42,7 @@ public class PersonagemController {
 
         return ResponseEntity.status(HttpStatus.OK).body(personagemResponse);
     }
-    @GetMapping("/")
+    @GetMapping("/personagens")
     public ResponseEntity<List<PersonagemResponse>> getPersonagens(){
         List<Personagem> personagens = personagemService.getPersonagens();
 
@@ -51,17 +51,17 @@ public class PersonagemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonagemResponse> atualizarPersonagem(@RequestBody PersonagemRequest personagemRequest) throws Exception {
+    public ResponseEntity<PersonagemResponse> atualizarPersonagem(@RequestBody PersonagemRequest personagemRequest, @PathVariable(value = "id") long personagemId) throws Exception {
         Personagem personagem = PersonagemMapper.toPersonagem(personagemRequest);
 
-        Personagem personagemAtualizado = personagemService.atualizarPersonagem(personagem);
+        Personagem personagemAtualizado = personagemService.atualizarPersonagem(personagem, personagemId);
 
         PersonagemResponse personagemResponse = PersonagemMapper.toPersonagemResponse(personagemAtualizado);
 
         return ResponseEntity.status(HttpStatus.OK).body(personagemResponse);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarPersonagem(@PathVariable(value = "id") int idPersonagem) throws Exception {
+    public ResponseEntity<Void> deletarPersonagem(@PathVariable(value = "id") long idPersonagem) throws Exception {
         personagemService.deletarPersonagem(idPersonagem);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

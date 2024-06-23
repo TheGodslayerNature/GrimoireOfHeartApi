@@ -19,8 +19,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 public class Persona implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column
     private String nome;
     @Column
