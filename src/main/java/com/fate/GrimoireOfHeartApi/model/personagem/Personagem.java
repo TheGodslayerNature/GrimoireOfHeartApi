@@ -19,8 +19,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class Personagem implements Serializable {
-    // Criar Um objeto Habilidades sociais que guarde o Tier sociais e ganhe habilidades com determinado nivel de tier
+    // Criar os DTOs dos objetos { "FEITO"} FALTA MELHORAR
+    // Refatorar controller para passar respostas de Entity { "FEITO"} FALTA COMPLETAR O DE PERSONA E MAGIA
+    // Tentar consumir a api pelo Front-End
+    // ADICIONAR AS OUTRAS CLASSES E MELHORAR A KLASS
     // Criar bag e items
+    // Criar Um objeto Habilidades sociais que guarde o Tier sociais e ganhe habilidades com determinado nivel de tier
     // Nas classes dividir o nome das habilidades com o que elas fazem
     // Conseguir uma forma de ter os danos da magia de forma apropriada
 

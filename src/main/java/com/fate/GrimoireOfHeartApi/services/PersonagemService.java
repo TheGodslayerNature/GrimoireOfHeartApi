@@ -16,14 +16,15 @@ import java.util.Optional;
 public class PersonagemService {
     //Devem ser adicionadas regras de negócio
     //Criar as devidas exceções
+
     @Autowired
     private final PersonagemRepository personagemRepository;
-    public void salvarPersonagem(Personagem personagem){
+    public Personagem salvarPersonagem(Personagem personagem){
         if (personagemRepository.findById(personagem.getId()).isPresent()){
             System.out.println("Personagem já existe");
-            return;
+            return new Personagem();
         }
-        personagemRepository.save(personagem);
+        return personagemRepository.save(personagem);
     }
     public Optional<Personagem> getPersonagemPorId(int id){
       return personagemRepository.findById(id);
@@ -34,13 +35,12 @@ public class PersonagemService {
         }
         return personagemRepository.findAll();
     }
-    public void atualizarPersonagem(int idPersonagem, Personagem novasCaracteristicas){
-        if (!personagemRepository.existsById(idPersonagem)){
+    public Personagem atualizarPersonagem(Personagem novasCaracteristicas){
+        if (!personagemRepository.existsById(novasCaracteristicas.getId())){
             System.out.println("Não existe esse personagem");
-            return;
+            return new Personagem();
         }
-        novasCaracteristicas.setId(idPersonagem);
-        personagemRepository.save(novasCaracteristicas);
+        return personagemRepository.save(novasCaracteristicas);
     }
     public void deletarPersonagem(int idPersonagem) throws Exception {
         if (!personagemRepository.existsById(idPersonagem)){

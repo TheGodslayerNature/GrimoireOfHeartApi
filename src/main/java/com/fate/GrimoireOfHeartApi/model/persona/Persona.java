@@ -33,6 +33,7 @@ public class Persona implements Serializable {
     private String habilidadeNatural;
     @Column
     private ArrayList<TiposDeMagia> meusTiposDeMagia = new ArrayList<>();
+//    @Column HashMap dando problemas para persisistir no JPA
     @Column
     private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
     @Column
@@ -73,20 +74,16 @@ public class Persona implements Serializable {
     }
     public void addResistencia(TiposDeMagia tiposDeMagia){
         interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
-        /* Adicionava resistência apenas se tivesse o tipo
         if (meusTiposDeMagia.contains(tiposDeMagia))
             interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
-         */
     }
 
     public void addFraqueza(TiposDeMagia tiposDeMagia) {
         interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
-        /*adicionava fraqueza apenas se não tivesse o tipo
         if (!meusTiposDeMagia.contains(tiposDeMagia))
             interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
-
-         */
     }
+
     public void addMagia(Magia magia) {
         for (int i = 0; i < deckDeMagia.length; i++) {
             if (deckDeMagia[i] == null){
