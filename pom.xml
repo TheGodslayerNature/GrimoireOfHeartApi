@@ -53,6 +53,13 @@
 			<artifactId>cucumber-java</artifactId>
 			<version>7.16.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+
 
 	</dependencies>
 

@@ -17,19 +17,18 @@ import java.util.Optional;
 @ResponseBody
 @RequestMapping("/personagem")
 public class PersonagemController {
-    //Arrumar Service para suportar a transferencia do DTO
-    //Criar requests e response de personagens
-    // Criar mapper para tratar as response e requests
     @Autowired
     private PersonagemService personagemService;
+    @Autowired
+    private PersonagemMapper mapper;
     @PostMapping()
     public ResponseEntity<PersonagemResponse> salvarPersonagem(@RequestBody PersonagemRequest personagemRequest){
 
-        Personagem personagem = PersonagemMapper.toPersonagem(personagemRequest);
+        Personagem personagem = mapper.toPersonagem(personagemRequest);
 
         Personagem personagemSalvo = personagemService.salvarPersonagem(personagem);
 
-        PersonagemResponse personagemResponse = PersonagemMapper.toPersonagemResponse(personagemSalvo);
+        PersonagemResponse personagemResponse = mapper.toPersonagemResponse(personagemSalvo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(personagemResponse);
     }
@@ -38,7 +37,7 @@ public class PersonagemController {
     public ResponseEntity<PersonagemResponse> getPersonagem(@PathVariable(value = "id") int idPersonagem) throws Exception {
         Optional<Personagem> personagemRetornado = personagemService.getPersonagemPorId(idPersonagem);
 
-        PersonagemResponse personagemResponse = PersonagemMapper.toPersonagemResponse(personagemRetornado.orElseThrow());
+        PersonagemResponse personagemResponse = mapper.toPersonagemResponse(personagemRetornado.orElseThrow());
 
         return ResponseEntity.status(HttpStatus.OK).body(personagemResponse);
     }
@@ -46,17 +45,17 @@ public class PersonagemController {
     public ResponseEntity<List<PersonagemResponse>> getPersonagens(){
         List<Personagem> personagens = personagemService.getPersonagens();
 
-        List<PersonagemResponse> personagensResponse = PersonagemMapper.toPersonagemListResponse(personagens);
+        List<PersonagemResponse> personagensResponse = mapper.toPersonagemListResponse(personagens);
         return ResponseEntity.status(HttpStatus.OK).body(personagensResponse);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PersonagemResponse> atualizarPersonagem(@RequestBody PersonagemRequest personagemRequest, @PathVariable(value = "id") long personagemId) throws Exception {
-        Personagem personagem = PersonagemMapper.toPersonagem(personagemRequest);
+        Personagem personagem = mapper.toPersonagem(personagemRequest);
 
         Personagem personagemAtualizado = personagemService.atualizarPersonagem(personagem, personagemId);
 
-        PersonagemResponse personagemResponse = PersonagemMapper.toPersonagemResponse(personagemAtualizado);
+        PersonagemResponse personagemResponse = mapper.toPersonagemResponse(personagemAtualizado);
 
         return ResponseEntity.status(HttpStatus.OK).body(personagemResponse);
     }

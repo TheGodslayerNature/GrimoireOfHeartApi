@@ -1,4 +1,4 @@
 package com.fate.GrimoireOfHeartApi.controllers;
 
-public class PersonaService {
+public class PersonaController {
 }

@@ -3,6 +3,8 @@ package com.fate.GrimoireOfHeartApi.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fate.GrimoireOfHeartApi.dto.request.PersonagemRequest;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosDeBatalha;
+import com.fate.GrimoireOfHeartApi.model.atributo.AtributosSociais;
 import com.fate.GrimoireOfHeartApi.model.persona.Persona;
 import com.fate.GrimoireOfHeartApi.model.personagem.Personagem;
 import org.junit.jupiter.api.AfterEach;
@@ -50,7 +52,7 @@ public class PersonagemControllerTest {
 
     @Test
     void deveConseguirTerSucessoAoRealizarUmPost() throws Exception {
-        PersonagemRequest request = new PersonagemRequest("Ariel");
+        PersonagemRequest request = new PersonagemRequest("Ariel", new AtributosDeBatalha(), new AtributosSociais());
         personagemController.salvarPersonagem(request);
 
         MockHttpServletResponse resultado = mockMvc.perform(post("/personagem")
@@ -60,13 +62,15 @@ public class PersonagemControllerTest {
 
         String[] parts = resultado.getContentAsString().split("[{}]");
 
+        System.out.println(transformarParaJson(new AtributosDeBatalha()));
         assertThat(HttpStatus.CREATED.value()).isEqualTo(resultado.getStatus());
-        assertThat(parts[1]).isEqualTo("\"nomePersonagem\":\"Ariel\"");
+//        assertThat(parts[1]).isEqualTo("\"nomePersonagem\":\"Ariel\"");
+        assertThat(resultado.getContentAsString()).isEqualTo("\"nomePersonagem\":\"Ariel\"");
     }
 
     @Test
     void deveRetornarUmPersonagemJsonAoFazerSuaSolicitacao() throws Exception {
-        PersonagemRequest request = new PersonagemRequest("Ariel");
+        PersonagemRequest request = new PersonagemRequest("Ariel", new AtributosDeBatalha(), new AtributosSociais());
         personagemController.salvarPersonagem(request);
 
         mockMvc.perform(post("/personagem")
@@ -84,17 +88,18 @@ public class PersonagemControllerTest {
     }
     @Test
     void deveTerSucessoAoAtualizarDadosDeUmPersonagem() throws Exception{
-        PersonagemRequest request = new PersonagemRequest("Madone");
+        PersonagemRequest request = new PersonagemRequest("Madonne", new AtributosDeBatalha(), new AtributosSociais());
+
         personagemController.salvarPersonagem(request);
 
         MockHttpServletResponse resultado = mockMvc.perform(post("/personagem")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(transformarParaJson(request))).andReturn().getResponse();
 
-        request = new PersonagemRequest("Oliver");
+        request = new PersonagemRequest("Oliver", new AtributosDeBatalha(), new AtributosSociais());
 
         assertThat(HttpStatus.CREATED.value()).isEqualTo(resultado.getStatus());
-        assertThat(resultado.getContentAsString().contains("Madone")).isEqualTo(true);
+        assertThat(resultado.getContentAsString().contains("Madonne")).isEqualTo(true);
 
         personagemController.atualizarPersonagem(request, 1L);
 
