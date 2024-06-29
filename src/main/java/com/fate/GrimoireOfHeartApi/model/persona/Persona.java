@@ -19,6 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 public class Persona implements Serializable {
+    //Criar uma entidade para reter as informações das interações de magias
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
@@ -34,9 +35,9 @@ public class Persona implements Serializable {
     @Column
     private ArrayList<TiposDeMagia> meusTiposDeMagia = new ArrayList<>();
 //    @Column HashMap dando problemas para persisistir no JPA
-    @Column
-    private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
-    @Column
+//    @Column
+//    private HashMap<String,String> interacoesDeMagias = criarInteracoesMagicas();
+//    @Column
     @OneToMany
     private Magia[] deckDeMagia = new Magia[16];
     @OneToOne(cascade = CascadeType.ALL)
@@ -72,17 +73,17 @@ public class Persona implements Serializable {
         interacoes.put("Intel","Neutro");
         return interacoes;
     }
-    public void addResistencia(TiposDeMagia tiposDeMagia){
-        interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
-        if (meusTiposDeMagia.contains(tiposDeMagia))
-            interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
-    }
-
-    public void addFraqueza(TiposDeMagia tiposDeMagia) {
-        interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
-        if (!meusTiposDeMagia.contains(tiposDeMagia))
-            interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
-    }
+//    public void addResistencia(TiposDeMagia tiposDeMagia){
+//        interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
+//        if (meusTiposDeMagia.contains(tiposDeMagia))
+//            interacoesDeMagias.put(tiposDeMagia.getNome(),"Resiste");
+//    }
+//
+//    public void addFraqueza(TiposDeMagia tiposDeMagia) {
+//        interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
+//        if (!meusTiposDeMagia.contains(tiposDeMagia))
+//            interacoesDeMagias.put(tiposDeMagia.getNome(),"Fraco");
+//    }
 
     public void addMagia(Magia magia) {
         for (int i = 0; i < deckDeMagia.length; i++) {

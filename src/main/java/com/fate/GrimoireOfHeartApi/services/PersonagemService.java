@@ -6,7 +6,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.BeanUtils;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +32,10 @@ public class PersonagemService {
         return personagemRepository.findAll();
     }
     public Personagem atualizarPersonagem(Personagem novasCaracteristicas, long personagemId){
+        //Arrumar depois, de uma forma que não utilize o set para o ID
         Personagem personagem = personagemRepository.getReferenceById(personagemId);
-        personagem.setNomePersonagem(novasCaracteristicas.getNomePersonagem());
+        BeanUtils.copyProperties(novasCaracteristicas, personagem);
+        personagem.setId(personagemId);
         return personagem;
     }
     public void deletarPersonagem(long idPersonagem) throws Exception {
